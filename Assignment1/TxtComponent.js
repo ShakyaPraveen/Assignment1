@@ -20,6 +20,7 @@ const TxtComponent = (props) => {
     let keyboardpad = props.keyboardpad;
     let myFunction = props.myFunction;
     let ID = props.ID;
+    let maxLengths = props.maxLength;
 
     const emptyFunction = () => {}
 
@@ -51,41 +52,18 @@ const TxtComponent = (props) => {
                     keyboardType={keyboardpad === ("number-pad") ? keyboardpad : 
                                         (keyboardpad === ("email-address") ? keyboardpad :'default')}
                     // onBlur={myFunction === 'CheckPassword2'? CheckPassword : emptyFunction}
-                    // maxLength={10}
+                    maxLength={maxLengths}
                     // textContentType='emailAddress'
                     onChangeText={props.onChangeText}
+                    value = {props.value}
                     // onBlur ={(props.password === props.reEnterPassword)? alert('true') : alert('false')}
                     
                     />
             </View>
-            
-            
-
-            
-
-
-
-
-
-
-
-       
-
-
-    
-   
   );
 };
 
-
-
-
-
-
-
-
 export default TxtComponent;
-
 
 const styles = StyleSheet.create({
     outerContainer: {
@@ -93,11 +71,7 @@ const styles = StyleSheet.create({
     },
     Container: {
         flex: 1,
-        // margin: 20,
-        // marginVertical: 50,
         marginHorizontal: '12%',
-        // borderWidth: 1,
-        
     },
     TextInputField:{
         borderWidth: 1,
@@ -107,7 +81,6 @@ const styles = StyleSheet.create({
         padding: 13,
         paddingLeft:18,
         fontSize: 18,
-
     },
     txtStyle: {
         fontSize: 18,

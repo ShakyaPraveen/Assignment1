@@ -8,7 +8,6 @@ import {
     TextInput,
     TouchableOpacity,
     Modal,
-    Image,
     } from 'react-native';
 import TxtComponent from './TxtComponent';
 
@@ -23,13 +22,13 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [reEnterPassword, setReEnterPassword] = useState('');
 
-    const [setHouseNo, setSetHouseNo] = useState('');
+    const [houseNo, setHouseNo] = useState('');
     const [street, setStreet] = useState('');
     const [area, setArea] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
 
-    const [value, onChangeText] = useState('');
+ 
 
     var namevalidation = /^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/ ;
     var emailvariable = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
@@ -37,7 +36,24 @@ const LoginPage = () => {
     var contactvalidation = password;
     const contactnumvalid = /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/ ;
 
+    const clearScreen = () => {
+        setVisible(false)
+        
+        setUserName('');
+        setUserEmail('')
+        setUserNumber('')
+        setPassword('')
+        setReEnterPassword('')
+        // setUserAddress('')
 
+        setHouseNo('')
+        setStreet('')
+        setArea('')
+        setCity('')
+        setState('')
+
+        // onChangeText('')       
+    }
 
 
 const HidenShow = () => {
@@ -58,50 +74,41 @@ const HidenShow = () => {
                     alert('does not match')
                 }
                 else{
+                    // var abc = userNumber;
+                    // var xyz = toString(abc);
+                    if (userNumber < 999999999 ){       
+                            alert('Invalid Number')
+                            // console.log(xyz)
+                    }
+                    else{   
                     if(contactnumvalid.test(userNumber) === false){
                         alert('contact Number Invalid')
                     }
                     else{
-                        if(!visible){
+                        // if(!visible){
                             setVisible(true)
-                        }
-                        else{
-                            setVisible(false)
-                            } 
+                        // }
+                        // else{
+                        //     setVisible(false)
+                        //     } 
 
-            setUserName(userName) 
-            setUserEmail(userEmail)
-            setUserNumber(userNumber)
-            setUserAddress(userAddress)
-                                
-            setSetHouseNo(setHouseNo)
-            setStreet(street)
-            setArea(area)
-            setCity(city)
-            setState(state)
-                    }
+                    setUserName(userName) 
+                    setUserEmail(userEmail)
+                    setUserNumber(userNumber)
+                    setUserAddress(userAddress)
+                                        
+                    setHouseNo(houseNo)
+                    setStreet(street)
+                    setArea(area)
+                    setCity(city)
+                    setState(state)
+                        }
+                    }   
                 }
             }
         }   
     }
-}
-
-    const clearScreen = () => {
-        
-        setUserName('');
-        setUserEmail('')
-        setUserNumber('')
-        setUserAddress('')
-
-        setSetHouseNo('')
-        setStreet('')
-        setArea('')
-        setCity('')
-        setState('')
-
-        // onChangeText('')
-        
-    }
+}   
 
   return (
     <ScrollView>    
@@ -110,17 +117,19 @@ const HidenShow = () => {
             <Text style={styles.header}>
                 User Info
             </Text>
-           
+          
 
             <TxtComponent 
                 name='Enter Full Name'
                 placeholder='Full Name'
-                onChangeText={(input)=>setUserName(input)}/>
+                onChangeText={(input)=>setUserName(input)}
+                value={userName}/>
 
             <TxtComponent 
                 name='Enter Email'
                 placeholder='Email'
                 keyboardpad="email-address"
+                value={userEmail}
                 onChangeText={(input)=>{
                     setUserEmail(input)
                     }}/>
@@ -129,6 +138,7 @@ const HidenShow = () => {
                 name='Create Password'
                 placeholder='********'
                 secureTextEntry={true}
+                value={password}
                 onChangeText={(input)=>setPassword(input)}
                 />
 
@@ -136,57 +146,63 @@ const HidenShow = () => {
                 name='Confirm Password'
                 placeholder='********'
                 secureTextEntry={true} 
+                value={reEnterPassword}
                 onChangeText={(input)=>setReEnterPassword(input)}
                 />
-                {/* <Text>hello</Text> */}
 
             <View style={{marginVertical: 15,}}>
                 <Text style={[styles.ItemSpacing, {fontSize: 18,}]}>Address: </Text>
                 <View style={{marginLeft: '15%'}}>
                     <AddressSubComponent 
                         name='House/Flat Number'
-                        onChangeText={(input)=>setSetHouseNo(input)} />
+                        value={houseNo}
+                        onChangeText={(input)=>setHouseNo(input)} />
                     <AddressSubComponent 
                         name='Street' 
+                        value={street}
                         onChangeText={(input)=>setStreet(input)}/>
                     <AddressSubComponent 
-                        name='Area/Locality' 
+                        name='Area/Locality'
+                        value={area} 
                         onChangeText={(input)=>setArea(input)}/>
                     <AddressSubComponent 
                         name='City' 
+                        value={city}
                         onChangeText={(input)=>setCity(input)}/>
                     <AddressSubComponent 
                         name='State' 
+                        value={state}
                         onChangeText={(input)=>setState(input)}/>
                 </View>
             </View>
-
-            
-
+     
             <TxtComponent 
                 name='Contact Number'
                 placeholder='********'
                 keyboardpad="number-pad"
+                value={userNumber}
+                maxLength={10}
                 onChangeText={(input)=>setUserNumber(input)}/>
-
 
             <View>
                 <Modal   
                     visible={visible}>
-                        <View style={{flex: 1, alignItems: 'center', justifyContent:'center', }}>
-                            
-                            
-                            <View style={styles.modalstyling}>
+                        <View style={{flex: 1, alignItems: 'center', justifyContent:'center', backgroundColor: 'red'}}>                                                  
+                            {/* <View style={{flex: 1, marginHorizontal: '10%', marginVertical: '20%'}}> */}
+                                <View style={[styles.modalstyling, {flex: 1, backgroundColor: 'yellow'}]}>
                                     <TouchableOpacity
                                         style={styles.btnalignment}
                                         onPress={() => {
-                                            HidenShow()
-                                            clearScreen()
-                                            }}>
+                                        // HidenShow()
+                                        clearScreen()
+                                        }}>
                                         <Text style={{color: '#fff', textAlign: 'center'}}>
                                             Close
                                         </Text>
                                     </TouchableOpacity> 
+                                {/* </View>
+                                <View style={{flex: 4}}> */}
+
                                     <Text style={{padding: 10, paddingBottom: 0,}}>
                                         Name:  {userName}
                                     </Text>   
@@ -197,11 +213,12 @@ const HidenShow = () => {
                                         Contact No.: {userNumber}
                                     </Text> 
                                     <Text style={{padding: 10, paddingBottom: 0,}}>
-                                        Address: {setHouseNo}
-                                        , {street} {area} - {city}, {state}
-       
-                                    </Text>                                                      
-                            </View>
+                                        Address: {houseNo}
+                                        , {street} {area} - {city}, {state}      
+                                    </Text> 
+
+                                </View>
+                            {/* </View> */}
                         </View>
                 </Modal>
             </View>
@@ -219,21 +236,13 @@ const HidenShow = () => {
     </SafeAreaView>
     </ScrollView>
   );
-    // const CheckPassword = () =>{
-    //     return(
-    //         <View>
-    //             <Text>
-    //                 invalid
-    //             </Text>
-    //         </View>
-    //     )
-    // }
 };
 
 
 const AddressSubComponent = (props) => {
     let name = props.name;
     let placeholder = props.placeholder;
+    let value = props.value;
     return(
         <View style ={styles.ItemSpacing1}>
             <Text style={styles.txtStyle1}>
@@ -243,18 +252,13 @@ const AddressSubComponent = (props) => {
                 style={styles.SubTextInputField}
                 placeholder={placeholder}
                 onChangeText={props.onChangeText}
+                value={value}
                 />
         </View>
     );
-
-    
-
 };
 
-
-
 export default LoginPage;
-
 
 const styles = StyleSheet.create({
     outerContainer: {
@@ -270,10 +274,10 @@ const styles = StyleSheet.create({
     btnalignment: {
         padding: 15,
         backgroundColor: 'green',
-        marginHorizontal: '25%',
+        marginHorizontal: '30%',
         marginVertical: 20,
-        borderRadius: 5,
-        
+        borderRadius: 5, 
+        paddingHorizontal: 30      
     },
     submitBtnTxt: {
         fontSize: 20,
@@ -295,7 +299,6 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingLeft:18,
         fontSize: 15,
-
     },
     txtStyle1: {
         fontSize: 15,
@@ -317,17 +320,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 30,
         borderRadius: 5,
-        // elevation: 20,
     },
-
     modalstyling: {
         flex: 1, 
-        marginVertical: '75%', 
+        // Width: '100%',
+        // height: '50%',
+        marginVertical: '60%', 
         backgroundColor: 'white',
         borderRadius: 15,
         borderWidth: 2,
         borderColor: 'lightgray',
     }
-
-
 });
